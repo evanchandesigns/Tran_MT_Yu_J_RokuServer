@@ -7,9 +7,17 @@ router.get("/", (req, res) => {
     res.json({ message: "The main interface of the Roku App - Movies Section" });
 });
 
-// Settings for Customizing Profile
-router.get("/profile", (req, res) => {
-    res.json({ message: "Where users customize their profile name/image" });
+router.get("/users", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query('SELECT * FROM tbl_users', function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
 })
 
 router.get("/movies", (req, res) => {
@@ -23,6 +31,7 @@ router.get("/movies", (req, res) => {
             res.json(results);
         });
     });
+
 })
 
 router.get("/tvs", (req, res) => {
@@ -48,30 +57,6 @@ router.get("/music", (req, res) => {
             if (error) throw error;
             res.json(results);
         });
-    });
-})
-
-router.get("/movies/:id", (req, res) => {
-    connect.query(`SELECT * FROM tbl_movies WHERE movies_id=${req.params.id}`, function (error, results, fields) {
-
-        if (error) throw error;
-        res.json(results);
-    });
-})
-
-router.get("/tvs/:id", (req, res) => {
-    connect.query(`SELECT * FROM tbl_tv WHERE tv_id=${req.params.id}`, function (error, results, fields) {
-
-        if (error) throw error;
-        res.json(results);
-    });
-})
-
-router.get("/music/:id", (req, res) => {
-    connect.query(`SELECT * FROM tbl_music WHERE music_id=${req.params.id}`, function (error, results, fields) {
-
-        if (error) throw error;
-        res.json(results);
     });
 })
 
