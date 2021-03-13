@@ -11,7 +11,7 @@ router.get("/users", (req, res) => {
     connect.getConnection(function (err, connection) {
         if (err) throw err;
 
-        connection.query('SELECT * FROM tbl_users', function (error, results) {
+        connection.query('SELECT * FROM tbl_user', function (error, results) {
             connection.release();
 
             if (error) throw error;
@@ -20,11 +20,11 @@ router.get("/users", (req, res) => {
     });
 })
 
-router.get("/movies", (req, res) => {
+router.get("/movies-parents", (req, res) => {
     connect.getConnection(function (err, connection) {
         if (err) throw err;
 
-        connection.query('SELECT * FROM tbl_movies', function (error, results) {
+        connection.query("SELECT * FROM tbl_movies WHERE movies_section = 'parents'", function (error, results) {
             connection.release();
 
             if (error) throw error;
@@ -33,6 +33,21 @@ router.get("/movies", (req, res) => {
     });
 
 })
+
+router.get("/movies-kids", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM tbl_movies WHERE movies_section = 'kids'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+
+})
+
 
 router.get("/tvs", (req, res) => {
     connect.getConnection(function (err, connection) {
