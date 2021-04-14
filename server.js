@@ -9,8 +9,8 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use("/roku", require("./routes/api"));
-
+app.use("/api", require("./routes/api"));
+app.use("/ums", require("./routes/ums"));
 
 app.listen(port, () => {
     console.log(`Server is running on ${port}`);
