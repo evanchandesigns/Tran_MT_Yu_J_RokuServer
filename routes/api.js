@@ -21,6 +21,33 @@ router.get("/parents/movies", (req, res) => {
 
 })
 
+router.get("/parents/movies/eraone", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM tbl_movies WHERE movies_year < 1980 AND movies_section = 'parents'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+
+})
+
+router.get("/parents/movies/eratwo", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM tbl_movies WHERE movies_year > 1979 AND movies_section = 'parents'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+
+})
 
 router.get("/parents/tvs", (req, res) => {
     connect.getConnection(function (err, connection) {

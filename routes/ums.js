@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-    connect.query(`SELECT user_id, user_parents, user_kids, parents_img, kids_img FROM tbl_user WHERE user_name = "${req.body.username}" AND user_pass = "${req.body.password}"`, (err, row) => {
+    connect.query(`SELECT * FROM tbl_user WHERE user_name = "${req.body.username}" AND user_pass = "${req.body.password}"`, (err, row) => {
         if (err) throw err;
 
         if (row.length) {
@@ -19,14 +19,6 @@ router.post('/login', (req, res) => {
             console.log("User not found");
         }
     });
-})
-
-router.get('/profiles', (req, res) => {
-    connect.query(`SELECT * FROM tbl_user WHERE user_id = "${req.body.userid}"`, (err, users) => {
-        if (err) throw err;
-
-        res.status(200).json(users);
-    })
 })
 
 module.exports = router;
