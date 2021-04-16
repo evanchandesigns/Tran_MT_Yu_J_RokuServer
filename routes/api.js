@@ -49,7 +49,7 @@ router.get("/parents/movies/eratwo", (req, res) => {
 
 })
 
-router.get("/parents/tvs", (req, res) => {
+router.get("/parents/tv", (req, res) => {
     connect.getConnection(function (err, connection) {
         if (err) throw err;
 
@@ -62,6 +62,33 @@ router.get("/parents/tvs", (req, res) => {
     });
 })
 
+router.get("/parents/tv/eraone", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM tbl_tv WHERE tv_year < 1980 AND tv_section = 'parents'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+
+})
+
+router.get("/parents/tv/eratwo", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM tbl_tv WHERE tv_year > 1979 AND tv_section = 'parents'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+
+})
 
 router.get("/parents/music", (req, res) => {
     connect.getConnection(function (err, connection) {
@@ -74,6 +101,34 @@ router.get("/parents/music", (req, res) => {
             res.json(results);
         });
     });
+})
+
+router.get("/parents/music/eraone", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM tbl_music WHERE music_year < 1980 AND music_section = 'parents'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+
+})
+
+router.get("/parents/music/eratwo", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM tbl_music WHERE music_year > 1979 AND music_section = 'parents'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+
 })
 
 router.get("/kids", (req, res) => {
