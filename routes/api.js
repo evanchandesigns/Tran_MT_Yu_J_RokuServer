@@ -107,7 +107,7 @@ router.get("/parents/music/eraone", (req, res) => {
     connect.getConnection(function (err, connection) {
         if (err) throw err;
 
-        connection.query("SELECT * FROM tbl_music WHERE music_year < 1980 AND music_section = 'parents'", function (error, results) {
+        connection.query("SELECT * FROM tbl_music WHERE music_year < 1970 AND music_section = 'parents'", function (error, results) {
             connection.release();
 
             if (error) throw error;
@@ -121,6 +121,20 @@ router.get("/parents/music/eratwo", (req, res) => {
     connect.getConnection(function (err, connection) {
         if (err) throw err;
 
+        connection.query("SELECT * FROM tbl_music WHERE music_year >= 1970 AND music_year < 1980 AND music_section = 'parents'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+
+})
+
+router.get("/parents/music/erathree", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
         connection.query("SELECT * FROM tbl_music WHERE music_year > 1979 AND music_section = 'parents'", function (error, results) {
             connection.release();
 
@@ -131,11 +145,11 @@ router.get("/parents/music/eratwo", (req, res) => {
 
 })
 
-router.get("/kids", (req, res) => {
+router.get("/kids/movies", (req, res) => {
     connect.getConnection(function (err, connection) {
         if (err) throw err;
 
-        connection.query("SELECT * FROM tbl_music, tbl_movies, tbl_tv WHERE music_section = 'kids' AND tv_section = 'kids'AND movies_section = 'kids'", function (error, results) {
+        connection.query("SELECT * FROM tbl_movies WHERE movies_section = 'kids'", function (error, results) {
             connection.release();
 
             if (error) throw error;
@@ -143,5 +157,32 @@ router.get("/kids", (req, res) => {
         });
     });
 })
+
+router.get("/kids/tvs", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM tbl_tv WHERE tv_section = 'kids'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+})
+
+router.get("/kids/music", (req, res) => {
+    connect.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM tbl_music WHERE music_section = 'kids'", function (error, results) {
+            connection.release();
+
+            if (error) throw error;
+            res.json(results);
+        });
+    });
+})
+
 
 module.exports = router;
